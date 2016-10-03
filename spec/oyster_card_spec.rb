@@ -48,8 +48,6 @@ require 'spec_helper'
       it 'checks to ensure balance is greater than minimum charge' do
         expect{subject.touch_in}.to raise_error "Insufficient money on card"
       end
-
-
     end
 
     describe '#touch_out' do
@@ -58,6 +56,12 @@ require 'spec_helper'
         subject.touch_in
         subject.touch_out
         expect(subject.in_journey?).to be_falsey
+      end
+
+      it "charges the fare on touch out" do
+        subject = OysterCard.new(OysterCard::MINIMUM_FARE)
+        subject.touch_in
+        expect{subject.touch_out}.to change{subject.balance}.by(-OysterCard::MINIMUM_FARE)
       end
     end
 
