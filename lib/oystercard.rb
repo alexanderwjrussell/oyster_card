@@ -13,7 +13,7 @@ class Oystercard
 
   def initialize(balance = 0)
     @balance = balance
-    @journey = Journey.new
+    @journey = Journey.new(self)
     @journey_log = JourneyLog.new
   end
 
@@ -26,7 +26,6 @@ class Oystercard
     fail "Insufficient funds to travel" if @balance < MINIMUM_FARE
     journey.in_journey == true ? deduct(fare) : journey_log.start(station_name)
     #journey.in_journey == true ? deduct(fare) : journey.start(station_name)
-  
   end
 
   def touch_out(station_name)

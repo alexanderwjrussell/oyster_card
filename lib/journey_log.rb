@@ -32,3 +32,6 @@ class JourneyLog
 #
 
 end
+```
+- manage a history of journies
+```
