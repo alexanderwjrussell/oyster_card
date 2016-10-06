@@ -3,6 +3,7 @@ require_relative 'journey'
 require_relative 'journey_log'
 
 class Oystercard
+
   attr_reader :balance, :entry_station, :exit_station, :journeys, :journey, :journey_log
 
   MAXIMUM_BALANCE = 90
@@ -28,8 +29,17 @@ class Oystercard
   def touch_out(station)
     finish_journey(station)
     deduct(fare)
-    journey.complete_journey
-    journey_log.complete_journey
+    complete_journey
+  end
+
+  private
+
+  def deduct(amount)
+    @balance -= amount
+  end
+
+  def fare
+   journey.journey_incomplete? ? PENALTY_FARE : TRAVEL_COST
   end
 
   def start_journey(station)
@@ -42,13 +52,8 @@ class Oystercard
     journey_log.finish(station)
   end
 
-  private
-
-  def deduct(amount)
-    @balance -= amount
-  end
-
-  def fare
-   journey.journey_incomplete? ? PENALTY_FARE : TRAVEL_COST
+  def complete_journey
+    journey.complete_journey
+    journey_log.complete_journey
   end
 end
