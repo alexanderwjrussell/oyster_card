@@ -1,7 +1,4 @@
-require_relative 'tracking'
-
 class Journey
-  include Tracking
 
   attr_reader :entry_station, :exit_station, :journeys, :journey_log
 
@@ -16,6 +13,19 @@ class Journey
 
   def journey_incomplete?
     @entry_station == nil || @exit_station == nil
+  end
+
+  def start(station)
+    @entry_station = station
+  end
+
+  def finish(station)
+    @exit_station = station
+  end
+
+  def reset
+    @entry_station = nil
+    @exit_station = nil
   end
 
   def complete_journey

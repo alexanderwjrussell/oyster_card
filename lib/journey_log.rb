@@ -1,7 +1,4 @@
-require_relative 'tracking'
-
-class JourneyLog
-  include Tracking
+class JourneyLog < Journey
 
   attr_reader :entry_station, :exit_station, :journeys
 
@@ -9,6 +6,10 @@ class JourneyLog
     @entry_station = entry_station
     @exit_station = exit_station
     @journeys = []
+  end
+
+  def create_journey
+    @journeys << { entry_station: @entry_station, exit_station: @exit_station }
   end
 
   def complete_journey
